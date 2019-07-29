@@ -1,0 +1,1413 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a initial draft spec of the to be implemented api",
+    "version": "0.0.0",
+    "title": "Tiger API Documentation",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath": "/beta",
+  "tags": [
+    {
+      "name": "Images",
+      "description": "Image upload and manipulation"
+    },
+    {
+      "name": "Authentication & Verification",
+      "description": "User authentication and verification",
+      "externalDocs": {
+        "description": "Related docs",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "user",
+      "description": "Operations about user",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/signup/emailSignUp": {
+      "post": {
+        "tags": [
+          "Authentication & Verification"
+        ],
+        "summary": "Mobile signup",
+        "description": "",
+        "operationId": "mobileSignup",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "Create New user",
+            "schema": {
+              "type": "object",
+              "required": [
+                "email",
+                "firstName",
+                "lastName",
+                "mobileNumber",
+                "dateOfBirth"
+              ],
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "mobileNumber": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "dateOfBirth": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "token": {
+                  "type": "string",
+                  "description": "this token use to sms verification"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "errors"
+          },
+          "403": {
+            "description": "Duplication key errors"
+          }
+        }
+      }
+    },
+    "/signup/verifyPin": {
+      "post": {
+        "tags": [
+          "Authentication & Verification"
+        ],
+        "summary": "Mobile signup",
+        "description": "",
+        "operationId": "pinformobileSignup",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "enter pin and mobile veryfication",
+            "schema": {
+              "type": "object",
+              "required": [
+                "token",
+                "pin"
+              ],
+              "properties": {
+                "token": {
+                  "type": "string"
+                },
+                "pin": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "user has create"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "pin number has expire"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signup/reRequest": {
+      "post": {
+        "tags": [
+          "Authentication & Verification"
+        ],
+        "summary": "Re request Pin number",
+        "description": "",
+        "operationId": "rerequestpinformobileSignup",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "request new pin number",
+            "schema": {
+              "type": "object",
+              "required": [
+                "mobileNumber"
+              ],
+              "properties": {
+                "mobileNumber": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "token": {
+                  "type": "string",
+                  "description": "new jwt token"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signin/emailSignIn": {
+      "post": {
+        "tags": [
+          "Authentication & Verification"
+        ],
+        "summary": "signup using phone number",
+        "description": "",
+        "operationId": "mobileSignin",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "request new pin number",
+            "schema": {
+              "type": "object",
+              "required": [
+                "mobile",
+                "password"
+              ],
+              "properties": {
+                "mobile": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string",
+                  "description": "user token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "new jwt token"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signin/fbSignIn": {
+      "post": {
+        "tags": [
+          "Authentication & Verification"
+        ],
+        "summary": "signin using fb token",
+        "description": "",
+        "operationId": "fbSignin",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "request new pin number",
+            "schema": {
+              "type": "object",
+              "required": [
+                "token"
+              ],
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string",
+                  "description": "user token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "new jwt token"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signup/fbSignUp": {
+      "post": {
+        "tags": [
+          "Authentication & Verification"
+        ],
+        "summary": "Facebook signup",
+        "description": "",
+        "operationId": "signupUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "The user to create.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "facebookId",
+                "email",
+                "firstName",
+                "lastName",
+                "gender",
+                "ageRange",
+                "profilePicture"
+              ],
+              "properties": {
+                "facebookId": {
+                  "type": "string"
+                },
+                "facebookToken": {
+                  "type": "string"
+                },
+                "mobileNumber": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "ageRange": {
+                  "type": "string",
+                  "example": "under 18"
+                },
+                "profilePicture": {
+                  "type": "string"
+                },
+                "aboutMe": {
+                  "type": "string"
+                },
+                "educationaHistory": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "description": "The user id of the saved signup infomation."
+                },
+                "email": {
+                  "type": "string",
+                  "description": "email of user"
+                },
+                "facebookToken": {
+                  "type": "string"
+                },
+                "nexmoToken": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid facebook token / facebook id"
+          }
+        }
+      }
+    },
+    "/signin/frogetPassword": {
+      "post": {
+        "tags": [
+          "Authentication & Verification"
+        ],
+        "summary": "froget signin password (This is first api call in froget password)",
+        "description": "",
+        "operationId": "frogetPassword",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "request new pin number",
+            "schema": {
+              "type": "object",
+              "required": [
+                "mobile"
+              ],
+              "properties": {
+                "mobile": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "token": {
+                  "type": "string",
+                  "description": "user token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signin/frogetPasPinVerify": {
+      "post": {
+        "tags": [
+          "Authentication & Verification"
+        ],
+        "summary": "froget password (This is second api call at the froget password)",
+        "description": "",
+        "operationId": "frogetPassword2",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "compair the pin number",
+            "schema": {
+              "type": "object",
+              "required": [
+                "pin",
+                "token"
+              ],
+              "properties": {
+                "pin": {
+                  "type": "integer"
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signin/enterNewPassword": {
+      "post": {
+        "tags": [
+          "Authentication & Verification"
+        ],
+        "summary": "enter the new password",
+        "description": "",
+        "operationId": "frogetPassword3",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "compair the pin number",
+            "schema": {
+              "type": "object",
+              "required": [
+                "userId",
+                "password"
+              ],
+              "properties": {
+                "userId": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/facebook/sync": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Sync facebook data",
+        "description": "Sync facebook data with that of the existing data in app",
+        "operationId": "facebookDataSync",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully updated user data"
+          },
+          "304": {
+            "description": "Nothing updated resorce unchanged"
+          },
+          "500": {
+            "description": "Error occured when trying to sync data"
+          }
+        }
+      }
+    },
+    "/images/single": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Upload single image",
+        "description": "Upload images",
+        "operationId": "uploadImages",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "image",
+            "description": "The image to upload.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "imagebase64"
+              ],
+              "properties": {
+                "imagebase64": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully uploaded image",
+            "schema": {
+              "$ref": "#/definitions/Image"
+            }
+          },
+          "400": {
+            "description": "Invalid image data"
+          }
+        }
+      }
+    },
+    "/images/multiple": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Upload multiple images",
+        "description": "Upload images",
+        "operationId": "uploadMultipleImages",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "image",
+            "description": "The image to upload.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "imagebase64": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully uploaded image",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Image"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid image data"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get user info",
+        "description": "User profile",
+        "operationId": "getUserInfo",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched user info",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Unauthorized Request"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update user info",
+        "description": "Update other user info , other than ones from facebook",
+        "operationId": "updateUserInfo",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated user info",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "304": {
+            "description": "Unchanged user info"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/user/preferances": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get user preferances",
+        "description": "User Preferances",
+        "operationId": "getUserPref",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched user preferances",
+            "schema": {
+              "$ref": "#/definitions/UserPref"
+            }
+          },
+          "401": {
+            "description": "Unauthorized Request"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update user preferances",
+        "description": "Update other user preferances",
+        "operationId": "updateUserPref",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "image",
+            "description": "The image to upload.",
+            "schema": {
+              "$ref": "#/definitions/UserPref"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated user preferances",
+            "schema": {
+              "$ref": "#/definitions/UserPref"
+            }
+          },
+          "304": {
+            "description": "Unchanged user info"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/user/images": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Add user images",
+        "description": "Add user images",
+        "operationId": "addUserImages",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "image",
+            "description": "Add new images to user max limit 5.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "isProfile": {
+                    "type": "boolean",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated user images",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Image"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update user images",
+        "description": "Update user images",
+        "operationId": "updateUserImages",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "image",
+            "description": "The image to upload.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "imageId": {
+                    "type": "string"
+                  },
+                  "newImageId": {
+                    "type": "string"
+                  },
+                  "isProfilePic": {
+                    "type": "boolean",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated user images"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      }
+    },
+    "/user/images/{id}": {
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Remove user image",
+        "description": "Remove user image",
+        "operationId": "removeUserImage",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "The image ID."
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully removed user image"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/user/availableMatches": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get matches for user",
+        "description": "List matches for user",
+        "operationId": "getMatches",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit size of matches to get",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserMatches"
+            }
+          },
+          "404": {
+            "description": "No matches found"
+          }
+        }
+      }
+    },
+    "/user/matchList": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get match list of user",
+        "description": "List matches for user",
+        "operationId": "getMatchList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit size of match list",
+            "type": "string"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "skip specified from list",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserMatchList"
+            }
+          },
+          "404": {
+            "description": "No matches found"
+          }
+        }
+      }
+    },
+    "/user/complain/{id}": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Report a user",
+        "description": "Reports a user with a reason images etc",
+        "operationId": "reportUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "The user id to report."
+          },
+          {
+            "in": "body",
+            "name": "report",
+            "description": "Report object.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "action"
+              ],
+              "properties": {
+                "reason": {
+                  "type": "string"
+                },
+                "action": {
+                  "type": "string"
+                },
+                "screenShot": {
+                  "type": "object",
+                  "properties": {
+                    "imageId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully reported"
+          },
+          "400": {
+            "description": "report failed"
+          }
+        }
+      }
+    },
+    "/user/matches/{id}": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Like , dislike / superlike",
+        "description": "Like , dislike or superlike",
+        "operationId": "actionMatches",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "the matched userId",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Preferance",
+            "description": "set preferance 'like' , 'dislike' , 'superlike' for the match",
+            "schema": {
+              "type": "object",
+              "required": [
+                "action"
+              ],
+              "properties": {
+                "action": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operation registered"
+          },
+          "404": {
+            "description": "No matches found"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get user by user id",
+        "description": "",
+        "operationId": "getUserById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "user that needs to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid id supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "mobileNumber": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "ageRange": {
+          "type": "string",
+          "example": "under 18"
+        },
+        "otherImages": {
+          "type": "object",
+          "description": "Max of 5 Images"
+        },
+        "profilePicture": {
+          "type": "object"
+        },
+        "aboutMe": {
+          "type": "string"
+        },
+        "educationaHistory": {
+          "type": "object"
+        },
+        "marriageStatus": {
+          "type": "string"
+        }
+      }
+    },
+    "Image": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date"
+        },
+        "description": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "size": {
+          "type": "object"
+        },
+        "metaData": {
+          "type": "object",
+          "properties": {
+            "hasFace": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "UserPref": {
+      "type": "object",
+      "properties": {
+        "seeking": {
+          "type": "string"
+        },
+        "ageRange": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "integer"
+            },
+            "max": {
+              "type": "integer"
+            }
+          }
+        },
+        "seekDistance": {
+          "type": "integer"
+        },
+        "religion": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relationshipTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "UserMatches": {
+      "type": "object",
+      "properties": {
+        "matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "total": {
+          "type": "integer"
+        }
+      }
+    },
+    "UserMatchList": {
+      "type": "object",
+      "properties": {
+        "matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "matchDate": {
+                "type": "string"
+              },
+              "threadCreated": {
+                "type": "boolean"
+              },
+              "threadId": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

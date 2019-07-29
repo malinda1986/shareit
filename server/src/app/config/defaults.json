@@ -1,0 +1,21 @@
+{
+    "hostname": "dev",
+    "api": {
+        "version" : 1,
+        "app_path": "/api/v1/"
+    },
+    "mongo": {
+        "host": "mongodb://tester:test123@ds133077.mlab.com:33077/soultest",
+        "db": "soul",
+        "debug": true
+    },
+    "key":"39EA062788832A3F4ABC4ED4533748B15EEAAB3B6A7606B6E47807CF15D47694",
+    "ip": "localhost",
+    "allowedUrls":["/api/v1/users/create", "/api/v1/category/list"],
+    "port": "8080",
+    "loggly": {
+        "token": "",
+        "subdomain": ""
+    },
+    "log_level": "error"
+}
